@@ -1,0 +1,111 @@
+image: datrio/gitlab-ci-android-ndk-fastlane
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+stages:
+  - build
+  - analyse
+  - test
+  - deploy
+#----------------------------------- get full access to gradle------------------------
+
+before_script:
+  - echo "******************* CI IS COMING  ***************** "
+  - chmod +x ./gradlew
+cache:
+  key: ${CI_PROJECT_ID}
+  paths:
+    - .gradle/
+
+#----------------------------------- TEST/DEVLOPMENT ------------------------
+build_development :
+  stage: build
+  script:
+    - ./gradlew assembleboiler_PROD_Debug
+  only:
+    - develop
+  tags:
+    - docker
+
+#----------------------------------- PRODUCTION { Debug / Release }------------------------
+
+build_production:
+  stage: build
+  script:
+    - ./gradlew assembleboiler_DEMO_Debug
+    - mv app/build/outputs/apk/PRODUCTION_/debug/app-PRODUCTION_-debug.apk app/build/outputs/apk/app-release.apk
+  only:
+    - master
+  tags:
+    - docker
+
+
+#-----------------------------------  LINT CODE [ will BE SONAR SOON ] ------------------------
+analyse_code:
+  stage: analyse
+  allow_failure: true
+  script:
+    - ./gradlew lint
+    - mkdir -p lint-results
+    - mv app/build/reports/lint-results.html ./lint-results/lint-results.html
+  except:
+    refs:
+      - /^feature/*/
+      - /feature/*/
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /skip-lint/
+  tags:
+    - docker
+  artifacts:
+    paths:
+      - lint-results
+#---------------------------- UNIT TEST --------------------- { allow_failure: false }
+unitTests:
+  stage: test
+  script:
+    - ./gradlew test
+  allow_failure: false
+  except:
+    refs:
+      - /^feature/*/
+      - /feature/*/
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /skip-test/
+  artifacts:
+    paths:
+      - app/build/outputs/
+  tags:
+    - docker
+
+#---------------------------- DEPLOY -----------------
+
+.package_template: &package_template_def
+  before_script:
+    - export VERSION_NAME=`egrep '^[[:blank:]]+versionName[[:blank:]]'  app/build.gradle | awk '{print $2}' | sed s/\"//g`
+    - export VERSION_CODE=`egrep '^[[:blank:]]+versionCode[[:blank:]]'  app/build.gradle | awk '{print $2}'`
+    - mkdir -p deliverables
+
+    # Store some information about the build
+    - touch ./deliverables/info.txt
+    - echo "Build date          $(date)"                >> ./deliverables/info.txt
+    - echo "App version name    ${VERSION_NAME}"        >> ./deliverables/info.txt
+    - echo "App version code    ${VERSION_CODE}"        >> ./deliverables/info.txt
+    - cat "./release-notes/${VERSION_NAME}.txt"         >> ./deliverables/info.txt
+
+
+package_release:
+  <<: *package_template_def
+  stage: deploy
+  environment: Release
+  only:
+    - master
+  tags:
+    - docker
+  script:
+    - mv app/build/outputs/apk/app-release.apk ./deliverables/app-release.apk
+    - fastlane beta
+  artifacts:
+    expire_in: 4 weeks
+    paths:
+      - deliverables

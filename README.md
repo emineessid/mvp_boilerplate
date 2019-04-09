@@ -1,0 +1,11 @@
+-Dagger 2
+- Rxjava
+- Kotlin
+- Android X
+- CLEAN MVP
+- BASE FRAGMENT / PRESENTER / ACTIVITY 
+- HELPERS 
+- CONSTRAINT LAYOUT
+- TIMBER
+- STETHO
+- retrofit2

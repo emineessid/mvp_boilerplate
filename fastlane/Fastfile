@@ -1,0 +1,26 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+
+  desc "Submit a new Beta Build to Crashlytics Beta"
+  lane :beta do
+    crashlytics(
+        api_token: "51af1d9be8fa115df9a34f986a9f4791487966bb",
+        build_secret: "9097a8402da260bc9566420a97b0219cddc18d3f346ebe7410f9a5bba9d080d1",
+        apk_path: "./deliverables/app-release.apk",
+        notes_path: "./deliverables/info.txt",
+        emails: "emine.essid@soat.fr"
+    )
+  end
+end

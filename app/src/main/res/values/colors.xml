@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#03A9F4</color>
+    <color name="colorPrimaryDark">#3F51B5</color>
+    <color name="colorAccent">#8BC34A</color>
+    <color name="dark_blue">#146A93</color>
+    <color name="error_message_color">#F44336</color>
+    <color name="success_message_color">#8BC34A</color>
+    <color name="tranparent_white_30percent">#4Dffffff</color>
+    <color name="tranparent_white_95percent">#f3ffffff</color>
+    <color name="transparent_green_95percent">#F250E3C2</color>
+
+
+    <color name="error_article">#F44336</color>
+    <color name="success_article">#8BC34A</color>
+    <color name="article_exit">#FF9800</color>
+</resources>

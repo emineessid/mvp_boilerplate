@@ -1,0 +1,22 @@
+<!---
+  strings.xml
+  OOK-APP  coded by Essid Emine ( SOAT 2019 )
+
+  Generated on 2/4/2019
+-->
+
+<resources>
+
+    <!-- ANDROID -->
+
+
+    <string name="clientId">905766819621-v3da8g9icdbg6r580hmgd4b201iaqps3.apps.googleusercontent.com</string>
+    <string name="loading_message">Loading...</string>
+    <string name="error_no_network">You dont have connection :(</string>
+    <string name="splash_logo">Splash Logo</string>
+    <string name="departure_city">Departure city</string>
+    <string name="arrival_city">Arrival city</string>
+    <string name="submit">Submit_location</string>
+
+
+</resources>

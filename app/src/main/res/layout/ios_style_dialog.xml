@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DialogActionBackgroundStyle">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txv_annuler"
+        android:background="@color/tranparent_white_95percent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/message_textview"
+            style="@style/DialogActionMessageStyle"
+            tools:text="MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE " />
+
+        <View style="@style/DialogActionSeparatorLineStyle" />
+
+        <TextView
+            android:id="@+id/txv_confirm"
+            style="@style/DialogActionPositiveButtonStyle"
+            tools:text="OK" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txv_annuler"
+        style="@style/DialogActionNegativeButtonStyle"
+        tools:text="ANNULER"
+        tools:visibility="visible" />
+</RelativeLayout>
