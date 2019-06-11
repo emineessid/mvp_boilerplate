@@ -22,7 +22,7 @@ import javax.inject.Singleton
 @Component(modules = arrayOf(AppModule::class))
 @AppScope
 interface AppComponant {
-    @AppScope
+    @Singleton
     fun provideApiService(): NetworkApiService
 
     @Singleton

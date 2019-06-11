@@ -1,7 +1,6 @@
 package com.interco.e.daggerrxretrofit.base.presenter
 
 
-import android.content.Context
 import com.interco.e.daggerrxretrofit.base.BaseViewInterface
 import com.interco.e.daggerrxretrofit.base.eventBus.BaseEvent
 import com.interco.e.daggerrxretrofit.base.eventBus.RxBus
@@ -15,7 +14,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
 /**
  * Created by emine on 14/12/2018.
@@ -63,13 +61,13 @@ open class BaseActivityPresenter<V : BaseViewInterface, R : BaseRepository>(var 
     }
 
 
-    protected fun <R> subscribeMainThredSingle(single: Single<R>, onNext: Consumer<in R>, onError: Consumer<Throwable>?) {
+    protected fun <R> subscribeMainThredSingle(single: Single<R>, onComplete: Consumer<in R>, onError: Consumer<Throwable>?) {
 
         sub(
 
                 single.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(onNext, onError!!)
+                        .subscribe(onComplete, onError!!)
         )
     }
 
